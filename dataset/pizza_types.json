@@ -1,0 +1,36 @@
+{
+	"name": "pizza_types",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sasisinfo8031421",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "pizzaTypes.csv",
+				"container": "pizzas"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "pizza_type_id",
+				"type": "String"
+			},
+			{
+				"name": "name",
+				"type": "String"
+			},
+			{
+				"name": "category",
+				"type": "String"
+			}
+		]
+	}
+}
