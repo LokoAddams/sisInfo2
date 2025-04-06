@@ -1,5 +1,5 @@
 {
-	"name": "order_details",
+	"name": "order222",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sasisinfo8031421",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "orderDetails.csv",
+				"fileName": "orders222.csv",
 				"container": "pizzas"
 			},
 			"columnDelimiter": ",",
@@ -20,19 +20,15 @@
 		},
 		"schema": [
 			{
-				"name": "order_details_id",
-				"type": "String"
-			},
-			{
 				"name": "order_id",
 				"type": "String"
 			},
 			{
-				"name": "pizza_id",
+				"name": "date",
 				"type": "String"
 			},
 			{
-				"name": "quantity",
+				"name": "time",
 				"type": "String"
 			}
 		]

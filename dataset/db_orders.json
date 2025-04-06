@@ -14,13 +14,10 @@
 				"precision": 10
 			},
 			{
-				"name": "date",
-				"type": "date"
-			},
-			{
-				"name": "time",
-				"type": "time",
-				"scale": 7
+				"name": "date_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			}
 		],
 		"typeProperties": {
