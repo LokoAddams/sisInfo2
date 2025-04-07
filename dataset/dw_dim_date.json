@@ -1,0 +1,36 @@
+{
+	"name": "dw_dim_date",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dw_pizzas",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "order_date",
+				"type": "date"
+			},
+			{
+				"name": "day",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "year",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dim_date"
+		}
+	}
+}
