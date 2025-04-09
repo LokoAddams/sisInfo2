@@ -35,13 +35,13 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(date_time = toTimestamp(concat(date , \" \", time), 'yyyy-MM-dd HH:mm:ss')\r",
-				") ~> derivedColumn1",
+				"source1 derive(time = toTimestamp(concat(\"1970-01-01\",\" \",time), \"yyyy-MM-dd HH:mm:ss\")) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          order_id as integer,",
-				"          date_time as timestamp",
+				"          order_date as date,",
+				"          order_time as timestamp",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -53,7 +53,8 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          order_id,",
-				"          date_time",
+				"          order_date = date,",
+				"          order_time = time",
 				"     )) ~> sink1"
 			]
 		}

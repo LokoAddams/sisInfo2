@@ -10,13 +10,7 @@
 		"schema": [
 			{
 				"name": "pizza_id",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "pizza_type_id",
-				"type": "int",
-				"precision": 10
+				"type": "varchar"
 			},
 			{
 				"name": "size",
@@ -27,6 +21,10 @@
 				"type": "decimal",
 				"precision": 10,
 				"scale": 2
+			},
+			{
+				"name": "pizza_type_id",
+				"type": "varchar"
 			},
 			{
 				"name": "pizza_type_name",
