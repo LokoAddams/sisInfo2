@@ -40,6 +40,12 @@
 				},
 				{
 					"name": "aggregate2"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -66,7 +72,13 @@
 				"     each(match(name != 'order_date'), $$ = first($$))) ~> aggregate1",
 				"select1 aggregate(groupBy(order_time),",
 				"     each(match(name != 'order_time'), $$ = first($$))) ~> aggregate2",
-				"aggregate1 sink(allowSchemaDrift: true,",
+				"aggregate1 derive(year = year(order_date),",
+				"          month = month(order_date),",
+				"          day = dayOfMonth(order_date)) ~> derivedColumn1",
+				"aggregate2 derive(hour = hour(order_time),",
+				"          minute = minute(order_time),",
+				"          second = second(order_time)) ~> derivedColumn2",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          order_date as date,",
@@ -81,8 +93,14 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
-				"aggregate2 sink(allowSchemaDrift: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          order_date,",
+				"          day,",
+				"          month,",
+				"          year",
+				"     )) ~> sink1",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          order_time as timestamp,",
@@ -97,7 +115,13 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          order_time,",
+				"          hour,",
+				"          minute,",
+				"          second",
+				"     )) ~> sink2"
 			]
 		}
 	}
