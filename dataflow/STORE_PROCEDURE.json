@@ -1,0 +1,70 @@
+{
+	"name": "STORE_PROCEDURE",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "db_pizzas",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dw_dim_pizza",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          pizza_id as string,",
+				"          size as string,",
+				"          price as decimal(8,2),",
+				"          pizza_type_id as string,",
+				"          pizza_name as string,",
+				"          category as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     procedureName: 'sp_GetPizzaDetails',",
+				"     schemaName: 'dbo',",
+				"     resultSet: true,",
+				"     format: 'procedure') ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          pizza_id as string,",
+				"          size as string,",
+				"          price as decimal(10,2),",
+				"          pizza_type_id as string,",
+				"          pizza_type_name as string,",
+				"          pizza_type_category as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          pizza_id,",
+				"          size,",
+				"          price,",
+				"          pizza_type_id,",
+				"          pizza_type_name = pizza_name,",
+				"          pizza_type_category = category",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
